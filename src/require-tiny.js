@@ -2,11 +2,11 @@ var require, define;
 
 (function () {
 
-    var mods    = {},
-        paths   = {},
-        doc     = document,
-        head    = doc.getElementsByTagName('head')[0],
-        waiting = [];
+    var mods     = {},
+        paths    = {},
+        doc      = document,
+        head     = doc.getElementsByTagName('head')[0],
+        waiting  = [];
     
     function syncRequire (name) {
         if (! mods[name]) {
@@ -37,19 +37,20 @@ var require, define;
     }
 
     require = function () {
+        var args = Array.prototype.slice.apply(arguments),
+            url,
+            script;
         if (args.length == 1) {
             for (var name in args[0]) {
                 paths[name] = args[0][name];
             }
         }
-        var args = Array.prototype.slice.apply(arguments),
-            url,
-            script;
         for (var i = 0; i < args.length - 1; i++) {
             if (mods[args[i]]) {
                 args[i] = mods[args[i]];
             }
-            else {
+            else if (mods[args[i]] !== 0) {
+                mods[args[i]] = 0;
                 if (! (url = paths[args[i]])) {
                     throw 'no path configured for ' + args[i];
                 }
@@ -92,6 +93,4 @@ var require, define;
     };
 
 })();
-
-
 
