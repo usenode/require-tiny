@@ -1,0 +1,3 @@
+[submodule "ext/amdjs-tests"]
+	path = ext/amdjs-tests
+	url = git://github.com/amdjs/amdjs-tests.git
